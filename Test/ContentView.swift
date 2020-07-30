@@ -11,8 +11,7 @@ struct ContentView: View {
     
     @State private var selectedColor : UIColor? = nil
     @State private var colors : [UIColor] = [.red, .yellow, .green, .orange, .blue, .magenta, .purple, .black]
-    @Namespace private var lists
-
+    
     var body: some View {
         GeometryReader { proxy in
             ScrollView {
@@ -26,7 +25,7 @@ struct ContentView: View {
                             if selectedColor == colors[id] && id % 2 != 0 {
                                 Color.clear
                             }
-
+                            
                             RectangleView(proxy: proxy, colors: colors, id: id, selectedColor: selectedColor)
                                 .onTapGesture {
                                     withAnimation{
@@ -40,14 +39,9 @@ struct ContentView: View {
                             
                             if selectedColor == colors[id] {
                                 if id <= colors.count - 3 {
-                                    if id % 2 != 0 {
-                                        Color.clear
-                                        Color.clear
-                                    } else {
-                                        Color.clear
-                                        Color.clear
-                                        Color.clear
-                                    }
+                                    Color.clear
+                                    Color.clear
+                                    Color.clear
                                 } else if id == colors.count - 2 {
                                     Color.clear
                                     Color.clear
@@ -58,10 +52,7 @@ struct ContentView: View {
                 }
             }
         }.padding(.all, 10)
-        
     }
-    
-    
 }
 
 struct RectangleView: View {
@@ -77,11 +68,9 @@ struct RectangleView: View {
             .frame(width: selectedColor == colors[id] ? proxy.size.width : proxy.size.width / 2 - 5, height: selectedColor == colors[id] ? proxy.size.width : proxy.size.width / 2 - 5)
             .layoutPriority(selectedColor == colors[id] ? 1 : 0)
             .offset(y: resolveOffset(for: id))
-            
     }
     
-    
-    // Used to offset the boxes after the expanded one to compensate for the missing padding
+    // Used to offset the boxes after the expanded one to compensate for missing padding
     func resolveOffset(for id: Int) -> CGFloat {
         guard let selectedColor = selectedColor, let selectedIndex = colors.firstIndex(of: selectedColor) else { return 0 }
         if id > selectedIndex {
@@ -89,6 +78,4 @@ struct RectangleView: View {
         }
         return 0
     }
-    
-    
 }
