@@ -10,12 +10,11 @@ import SwiftUI
 @main
 struct TestApp: App {
     
-    let colors : [UIColor] = [.red, .yellow, .green, .orange, .blue, .magenta, .purple, .black, .cyan]
-    let colorsReversed : [UIColor] = [.cyan, .black, .purple, .magenta, .blue, .orange, .green, .yellow, .red]
-    
+    let colors : [UIColor] = [.red, .yellow, .green, .orange, .blue, .magenta, .purple, .black, .cyan, .cyan, .black, .purple, .magenta, .blue, .orange, .green, .yellow, .red]
+
     var body: some Scene {
         WindowGroup {
-            GenericParallelStackView(padding: 10, firstElementArray: colors, secondElementArray: colorsReversed) { color in
+            GenericParallelStackView(padding: 10, elements: colors) { color in
                 Color(color)
             }
         }
