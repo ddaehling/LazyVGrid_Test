@@ -9,7 +9,7 @@ import SwiftUI
 
 import SwiftUI
 
-struct GenericParallelStackView<T, Content: View>: View where T: Equatable {
+struct GenericParallelStackView<T: Equatable, Content: View>: View {
     
     let padding : CGFloat
     let elements : [T]
@@ -49,7 +49,6 @@ struct GenericParallelStackView<T, Content: View>: View where T: Equatable {
                                             } else {
                                                 selectedSecondElement = nil
                                                 selectedElement = transformedFirstArray[id]
-                                                
                                             }
                                         }
                                     }
@@ -74,7 +73,7 @@ struct GenericParallelStackView<T, Content: View>: View where T: Equatable {
                                                 selectedSecondElement = transformedSecondArray[id]
                                             }
                                         }
-                                    }
+                                    }.rotation3DEffect(.init(degrees: 180), axis: (x: 0, y: 1, z: 0))
                             }
                         }
                     }
@@ -85,8 +84,6 @@ struct GenericParallelStackView<T, Content: View>: View where T: Equatable {
             }
         }.padding(10)
     }
-    
-    
     
     func resolveOffset(for proxy: GeometryProxy) -> CGFloat {
         selectedSecondElement == nil ? proxy.size.width / 2 - padding / 2 : proxy.size.width
