@@ -15,7 +15,9 @@ struct TestApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ParallelStackView(padding: 10, firstElementArray: colors.shuffled(), secondElementArray: colorsReversed.shuffled())
+            GenericParallelStackView(padding: 10, firstElementArray: colors, secondElementArray: colorsReversed) { color in
+                Color(color)
+            }
         }
     }
 }
