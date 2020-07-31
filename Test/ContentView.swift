@@ -4,9 +4,9 @@
 //
 //  Created by Daniel Dähling on 07.07.20.
 //
-
-import SwiftUI
-
+//
+//import SwiftUI
+//
 //struct ContentView: View {
 //    
 //    @State private var selectedColor : UIColor? = nil
@@ -24,7 +24,7 @@ import SwiftUI
 //                    ForEach(0..<colors.count, id: \.self) { id in
 //                        
 //                        if selectedColor == colors[id] && id % 2 != 0 {
-//                            Color.clear.frame(width: proxy.size.width, alignment: .trailing)
+//                            Color.clear
 //                        }
 //                        
 //                        RectangleView(proxy: proxy, colors: colors, id: id, selectedColor: selectedColor, padding: padding)
@@ -49,7 +49,7 @@ import SwiftUI
 //        }.padding(.all, 10)
 //    }
 //}
-
+//
 //struct RectangleView: View {
 //    
 //    var proxy: GeometryProxy
@@ -67,13 +67,13 @@ import SwiftUI
 //    
 //    // Used to offset the boxes after the expanded one to compensate for missing padding
 //    func resolveOffset(for id: Int) -> CGFloat {
-////        guard let selectedColor = selectedColor, let selectedIndex = colors.firstIndex(of: selectedColor) else {
-////            print("Zero padding offset for item \(id)")
-////            return 0
-////        }
-////        if id > selectedIndex {
-////            return -(padding * 2)
-////        }
+//        guard let selectedColor = selectedColor, let selectedIndex = colors.firstIndex(of: selectedColor) else {
+//            print("Zero padding offset for item \(id)")
+//            return 0
+//        }
+//        if id > selectedIndex {
+//            return -(padding * 2)
+//        }
 //        return 0
 //    }
 //    
