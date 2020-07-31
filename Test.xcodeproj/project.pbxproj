@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		655C7C9224D380F800297D7B /* ParallelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C7C9124D380F800297D7B /* ParallelStackView.swift */; };
 		65D6DA0524B4DE2200DEE7C6 /* TestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D6DA0424B4DE2200DEE7C6 /* TestApp.swift */; };
 		65D6DA0724B4DE2200DEE7C6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D6DA0624B4DE2200DEE7C6 /* ContentView.swift */; };
 		65D6DA0924B4DE2300DEE7C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65D6DA0824B4DE2300DEE7C6 /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		655C7C9124D380F800297D7B /* ParallelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallelStackView.swift; sourceTree = "<group>"; };
 		65D6DA0124B4DE2200DEE7C6 /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65D6DA0424B4DE2200DEE7C6 /* TestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestApp.swift; sourceTree = "<group>"; };
 		65D6DA0624B4DE2200DEE7C6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 			children = (
 				65D6DA0424B4DE2200DEE7C6 /* TestApp.swift */,
 				65D6DA0624B4DE2200DEE7C6 /* ContentView.swift */,
+				655C7C9124D380F800297D7B /* ParallelStackView.swift */,
 				65D6DA0824B4DE2300DEE7C6 /* Assets.xcassets */,
 				65D6DA0D24B4DE2300DEE7C6 /* Info.plist */,
 				65D6DA0A24B4DE2300DEE7C6 /* Preview Content */,
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				655C7C9224D380F800297D7B /* ParallelStackView.swift in Sources */,
 				65D6DA0724B4DE2200DEE7C6 /* ContentView.swift in Sources */,
 				65D6DA0524B4DE2200DEE7C6 /* TestApp.swift in Sources */,
 			);
