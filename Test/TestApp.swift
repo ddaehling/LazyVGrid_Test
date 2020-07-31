@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct TestApp: App {
+    
+    let colors : [UIColor] = [.red, .yellow, .green, .orange, .blue, .magenta, .purple, .black, .cyan]
+    let colorsReversed : [UIColor] = [.cyan, .black, .purple, .magenta, .blue, .orange, .green, .yellow, .red]
+    
     var body: some Scene {
         WindowGroup {
-            ParallelStackView()
+            ParallelStackView(padding: 10, firstElementArray: colors.shuffled(), secondElementArray: colorsReversed.shuffled())
         }
     }
 }

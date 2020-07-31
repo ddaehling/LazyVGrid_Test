@@ -9,32 +9,50 @@ import SwiftUI
 
 struct ParallelStackView: View {
     
+    let padding : CGFloat
+    let firstElementArray : [UIColor]
+    let secondElementArray : [UIColor]
+    
     @State private var selectedColor : UIColor? = nil
     @State private var selectedColorReversed : UIColor? = nil
-    @State var colors : [UIColor?] = [nil, .red, nil, .yellow, nil, .green, nil, .orange, nil, .blue, nil, .magenta, nil, .purple, nil, .black, nil, .cyan]
-    @State var colorsReversed : [UIColor?] = [nil, .cyan, nil, .black, nil, .purple, nil, .magenta, nil, .blue, nil, .orange, nil, .green, nil, .yellow, nil, .red]
-    private let padding : CGFloat = 10
-    private let numberOfColumns = 2
+    
     
     var body: some View {
-        GeometryReader { proxy in
+        
+        var transformedFirstArray : [UIColor?] {
+            transformArray(array: firstElementArray)
+        }
+        
+        var transformedSecondArray : [UIColor?] {
+            transformArray(array: secondElementArray)
+        }
+        
+        func resolveClearViewHeightForFirstArray(id: Int, for proxy: GeometryProxy) -> CGFloat {
+            transformedSecondArray[id+1] == selectedColorReversed || (transformedSecondArray[1] == selectedColorReversed && id == 0) ? proxy.size.width + padding : 0
+        }
+        
+        func resolveClearViewHeightForSecondArray(id: Int, for proxy: GeometryProxy) -> CGFloat {
+            transformedFirstArray[id+1] == selectedColor || (transformedFirstArray[1] == selectedColor && id == 0) ? proxy.size.width + padding : 0
+        }
+        
+        return GeometryReader { proxy in
             ScrollView {
                 ZStack(alignment: .topLeading) {
                     VStack(alignment: .leading, spacing: padding / 2) {
-                        ForEach(0..<colors.count, id: \.self) { id in
-                            if colors[id] == nil {
+                        ForEach(0..<transformedFirstArray.count, id: \.self) { id in
+                            if transformedFirstArray[id] == nil {
                                 Color.clear.frame(
                                     width: proxy.size.width / 2 - padding / 2,
-                                    height: colorsReversed[id+1] == selectedColorReversed || (colorsReversed[1] == selectedColorReversed && id == 0) ? proxy.size.width + padding : 0)
+                                    height: resolveClearViewHeightForFirstArray(id: id, for: proxy))
                             } else {
-                                RectangleView(proxy: proxy, colors: colors, id: id, selectedColor: selectedColor, padding: padding)
+                                RectangleView(proxy: proxy, colors: transformedFirstArray, id: id, selectedColor: selectedColor, padding: padding)
                                     .onTapGesture {
-                                        withAnimation{
-                                            if selectedColor == colors[id] {
+                                        withAnimation(.spring()){
+                                            if selectedColor == transformedFirstArray[id] {
                                                 selectedColor = nil
                                             } else {
                                                 selectedColorReversed = nil
-                                                selectedColor = colors[id]
+                                                selectedColor = transformedFirstArray[id]
                                                 
                                             }
                                         }
@@ -43,21 +61,21 @@ struct ParallelStackView: View {
                         }
                     }
                     VStack(alignment: .leading, spacing: padding / 2) {
-                        ForEach(0..<colorsReversed.count, id: \.self) { id in
-                            if colorsReversed[id] == nil {
+                        ForEach(0..<transformedSecondArray.count, id: \.self) { id in
+                            if transformedSecondArray[id] == nil {
                                 Color.clear.frame(
                                     width: proxy.size.width / 2 - padding / 2,
-                                    height: colors[id+1] == selectedColor || (colors[1] == selectedColor && id == 0) ? proxy.size.width + padding : 0)
+                                    height: resolveClearViewHeightForSecondArray(id: id, for: proxy))
                             } else {
-                                RectangleView(proxy: proxy, colors: colorsReversed, id: id, selectedColor: selectedColorReversed, padding: padding)
+                                RectangleView(proxy: proxy, colors: transformedSecondArray, id: id, selectedColor: selectedColorReversed, padding: padding)
                                     
                                     .onTapGesture {
-                                        withAnimation{
-                                            if selectedColorReversed == colorsReversed[id] {
+                                        withAnimation(.spring()){
+                                            if selectedColorReversed == transformedSecondArray[id] {
                                                 selectedColorReversed = nil
                                             } else {
                                                 selectedColor = nil
-                                                selectedColorReversed = colorsReversed[id]
+                                                selectedColorReversed = transformedSecondArray[id]
                                             }
                                         }
                                     }
@@ -72,8 +90,20 @@ struct ParallelStackView: View {
         }.padding(10)
     }
     
+    
+    
     func resolveOffset(for proxy: GeometryProxy) -> CGFloat {
         selectedColorReversed == nil ? proxy.size.width / 2 - padding / 2 : proxy.size.width
+    }
+    
+    func transformArray(array: [UIColor]) -> [UIColor?] {
+        var arrayTransformed = array.map { Optional($0) }
+        for element in arrayTransformed {
+            guard let firstIndex = arrayTransformed.firstIndex(of: element) else { break }
+            arrayTransformed.insert(nil, at: firstIndex)
+        }
+        print(arrayTransformed)
+        return arrayTransformed
     }
 }
 
@@ -106,13 +136,5 @@ struct RectangleView: View {
     
     func calculateFrame(for id: Int) -> CGFloat {
         selectedColor == colors[id] ? proxy.size.width : proxy.size.width / 2 - 5
-    }
-}
-
-
-
-struct ParallelStackView_Previews: PreviewProvider {
-    static var previews: some View {
-        ParallelStackView()
     }
 }
