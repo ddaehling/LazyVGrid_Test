@@ -89,7 +89,7 @@ struct GenericParallelStackView<T: Equatable, Content: View>: View {
         selectedSecondElement == nil ? proxy.size.width / 2 - padding / 2 : proxy.size.width
     }
     
-    func transformArray(array: [T]) -> ([T?], [T?]) {
+    func transformArray<T: Equatable>(array: [T]) -> ([T?], [T?]) {
         var arrayTransformed : [T?] = []
         array.map { element -> (T?, T?) in
             return (nil, element)
@@ -97,19 +97,20 @@ struct GenericParallelStackView<T: Equatable, Content: View>: View {
             arrayTransformed.append($0.0)
             arrayTransformed.append($0.1)
         }
+        arrayTransformed = arrayTransformed.reversed()
         
-        var transformedSecondArray : [T?] = []
-        let c = arrayTransformed.count
-        var i = 0
-        while i < c / 2 {
-            guard let element = arrayTransformed.popLast() else { break }
-            transformedSecondArray.append(element)
-            i += 1
+        var firstTransformedArray : [T?] = []
+        var secondTransformedArray : [T?] = []
+        
+        for i in 0...arrayTransformed.count / 2 {
+            guard let nilValue = arrayTransformed.popLast(), let element = arrayTransformed.popLast() else { break }
+            if i % 2 == 0 {
+                firstTransformedArray += [nilValue, element]
+            } else {
+                secondTransformedArray += [nilValue, element]
+            }
         }
-        if let last = arrayTransformed.last, last == nil {
-            transformedSecondArray.append(arrayTransformed.popLast()?.flatMap { $0 })
-        }
-        return (arrayTransformed, transformedSecondArray.reversed().map { $0 })
+        return (firstTransformedArray, secondTransformedArray)
     }
     
     struct RectangleView: View {
